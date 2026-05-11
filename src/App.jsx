@@ -127,7 +127,7 @@ function HomePage() {
   return (
     <>
       <section className="hero-section">
-        <img src={placeholderImage} alt="" className="absolute inset-0 h-full w-full object-cover grayscale" />
+        <img src={placeholderImage} alt="" className="absolute inset-0 h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-r from-black via-black/75 to-black/20" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(216,160,43,0.12)_1px,transparent_1px),linear-gradient(0deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:96px_96px]" />
 

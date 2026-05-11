@@ -1,4 +1,4 @@
-export const placeholderImage = '/images/bg.png'
+export const placeholderImage = '/images/bg.webp'
 export const placeholderAvatarImage = '/images/members/unknown.webp'
 
 export const navItems = [
