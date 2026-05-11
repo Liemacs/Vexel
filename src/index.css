@@ -1,6 +1,293 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&family=Roboto+Condensed:wght@400;500;700&display=swap');
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Roboto Condensed", system-ui, sans-serif;
+  --font-display: "Bebas Neue", "Oswald", "Roboto Condensed", system-ui, sans-serif;
+  --font-mono: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: #0d0d0d;
+  scroll-behavior: smooth;
+}
 
 body {
   margin: 0;
   min-width: 320px;
+  background: #0d0d0d;
+  color: #e7e5e4;
+  font-family: var(--font-sans);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: rgba(216, 160, 43, 0.35);
+  color: #fff7ed;
+}
+
+.noise-layer {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.08;
+  background-image:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 4px 4px, 100% 6px;
+  mix-blend-mode: overlay;
+}
+
+.hero-section {
+  position: relative;
+  min-height: 86svh;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(68, 64, 60, 0.9);
+}
+
+.site-section {
+  margin-inline: auto;
+  max-width: 80rem;
+  padding: 5rem 1rem;
+}
+
+@media (min-width: 640px) {
+  .site-section {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-section {
+    padding-inline: 2rem;
+    padding-block: 6rem;
+  }
+}
+
+.kicker {
+  color: #f6c453;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.archive-panel {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(68, 64, 60, 0.95);
+  background:
+    linear-gradient(135deg, rgba(255, 181, 71, 0.08), transparent 28%),
+    linear-gradient(180deg, rgba(28, 25, 23, 0.92), rgba(12, 10, 9, 0.94));
+  padding: 1.25rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045);
+}
+
+@media (min-width: 640px) {
+  .archive-panel {
+    padding: 1.5rem;
+  }
+}
+
+.archive-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-top: 2px solid rgba(216, 160, 43, 0.28);
+  opacity: 0.9;
+}
+
+.nav-link {
+  border: 1px solid transparent;
+  color: #a8a29e;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0.48rem 0.65rem;
+  text-transform: uppercase;
+  font-size: 0.74rem;
+  transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.nav-link:hover,
+.nav-link-active {
+  border-color: rgba(216, 160, 43, 0.42);
+  background: rgba(216, 160, 43, 0.08);
+  color: #fcd34d;
+}
+
+.primary-action,
+.secondary-action {
+  align-items: center;
+  border: 1px solid;
+  display: inline-flex;
+  gap: 0.6rem;
+  min-height: 3rem;
+  padding: 0.8rem 1rem;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  font-weight: 800;
+  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease, color 180ms ease;
+}
+
+.primary-action {
+  border-color: rgba(251, 191, 36, 0.75);
+  background: #d8a02b;
+  color: #11100d;
+}
+
+.secondary-action {
+  border-color: rgba(168, 162, 158, 0.6);
+  background: rgba(0, 0, 0, 0.55);
+  color: #e7e5e4;
+}
+
+.primary-action:hover,
+.secondary-action:hover {
+  transform: translateY(-1px);
+}
+
+.primary-action:hover {
+  background: #ffb547;
+}
+
+.secondary-action:hover {
+  border-color: rgba(251, 191, 36, 0.65);
+  color: #fde68a;
+}
+
+.terminal-panel {
+  border: 1px solid rgba(216, 160, 43, 0.35);
+  background: rgba(0, 0, 0, 0.72);
+  color: #fcd34d;
+  font-family: var(--font-mono);
+  min-height: 12rem;
+  padding: 1.25rem;
+  box-shadow: 0 0 40px rgba(216, 160, 43, 0.12);
+}
+
+.terminal-panel p {
+  margin: 0 0 0.65rem;
+  animation: terminal-pulse 3s ease-in-out var(--delay) infinite;
+  font-size: 0.86rem;
+}
+
+@keyframes terminal-pulse {
+  0%,
+  100% {
+    opacity: 0.48;
+  }
+  45%,
+  65% {
+    opacity: 1;
+  }
+}
+
+.dossier-card {
+  border: 1px solid rgba(68, 64, 60, 0.95);
+  background: rgba(12, 10, 9, 0.88);
+  display: block;
+  overflow: hidden;
+  transition: border-color 180ms ease, transform 180ms ease;
+}
+
+.dossier-card:hover {
+  border-color: rgba(251, 191, 36, 0.5);
+  transform: translateY(-2px);
+}
+
+.operation-card {
+  min-height: 17rem;
+}
+
+.map-frame {
+  aspect-ratio: 16 / 10;
+  background:
+    radial-gradient(circle at 68% 30%, rgba(127, 29, 29, 0.45), transparent 18%),
+    radial-gradient(circle at 26% 70%, rgba(120, 113, 108, 0.25), transparent 20%),
+    linear-gradient(135deg, rgba(41, 37, 36, 0.92), rgba(12, 10, 9, 0.96));
+  border: 1px solid rgba(68, 64, 60, 0.95);
+  min-height: 22rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.map-grid {
+  background-image:
+    linear-gradient(rgba(216, 160, 43, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(216, 160, 43, 0.12) 1px, transparent 1px);
+  background-size: 64px 64px;
+  opacity: 0.7;
+}
+
+.map-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.45));
+}
+
+.map-point {
+  align-items: center;
+  background: rgba(0, 0, 0, 0.72);
+  border: 1px solid rgba(216, 160, 43, 0.55);
+  color: #fcd34d;
+  display: inline-flex;
+  gap: 0.35rem;
+  max-width: min(12rem, 42vw);
+  padding: 0.45rem 0.6rem;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+  z-index: 2;
+}
+
+.map-point span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.78rem;
+}
+
+.map-point:hover,
+.map-point-active {
+  background: rgba(216, 160, 43, 0.18);
+  border-color: rgba(255, 213, 128, 0.9);
+  transform: translate(-50%, -50%) scale(1.03);
+}
+
+@media (max-width: 640px) {
+  .map-frame {
+    aspect-ratio: 3 / 4;
+  }
+
+  .map-point {
+    max-width: 8.5rem;
+    padding: 0.4rem;
+  }
+
+  .map-point span {
+    font-size: 0.68rem;
+  }
 }
