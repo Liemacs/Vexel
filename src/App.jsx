@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   ArrowRight,
   FileSearch,
   MessageSquareWarning,
+  Pause,
+  Play,
   Shield,
 } from 'lucide-react'
 import { CharacterCard, ContractCard, VehicleGroup } from './components/Cards'
@@ -14,6 +16,7 @@ import { cardWear } from './utils/cardWear'
 import {
   codeRules,
   contracts,
+  anthemAudio,
   leadershipCards,
   mapPoints,
   members,
@@ -123,6 +126,48 @@ function Page({ page }) {
   }
 }
 
+function AnthemButton() {
+  const audioRef = useRef(null)
+  const [isPlaying, setIsPlaying] = useState(false)
+
+  function toggleAnthem() {
+    const audio = audioRef.current
+    if (!audio) return
+
+    if (isPlaying) {
+      audio.pause()
+      setIsPlaying(false)
+      return
+    }
+
+    audio.play()
+      .then(() => setIsPlaying(true))
+      .catch(() => setIsPlaying(false))
+  }
+
+  return (
+    <>
+      <button
+        type="button"
+        className={`anthem-action ${isPlaying ? 'anthem-action-active' : ''}`}
+        onClick={toggleAnthem}
+        aria-label={isPlaying ? 'Остановить гимн' : 'Включить гимн'}
+      >
+        {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
+        {isPlaying ? 'Остановить гимн' : 'Слушать гимн'}
+      </button>
+      <audio
+        ref={audioRef}
+        src={anthemAudio}
+        preload="metadata"
+        onEnded={() => setIsPlaying(false)}
+        onPause={() => setIsPlaying(false)}
+        onPlay={() => setIsPlaying(true)}
+      />
+    </>
+  )
+}
+
 function HomePage() {
   return (
     <>
@@ -151,6 +196,7 @@ function HomePage() {
               <a href="/people" className="secondary-action">
                 Просмотреть досье
               </a>
+              <AnthemButton />
             </div>
           </div>
 
