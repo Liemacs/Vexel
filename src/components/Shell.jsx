@@ -27,7 +27,7 @@ export function Shell({ activePage, children }) {
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-8 h-8"
               >
-                <g clip-path="url(#clip0_87_90)">
+                <g clipPath="url(#clip0_87_90)">
                   <rect x="99" y="127" width="220" height="35" fill="#D9D9D9" />
                   <rect x="99" y="192" width="220" height="35" fill="#D9D9D9" />
                   <rect x="99" y="257" width="220" height="35" fill="#D9D9D9" />

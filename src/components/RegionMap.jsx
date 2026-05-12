@@ -35,7 +35,7 @@ export function RegionMap({ points }) {
         ))}
       </div>
 
-      <Panel className="self-stretch">
+      <Panel seed={`map-${selected.id}`} className="self-stretch">
         <p className="kicker">карта региона</p>
         <h3 className="mt-3 font-display text-4xl uppercase text-stone-100">{selected.name}</h3>
         <p className="mt-2 text-sm uppercase text-amber-300">{selected.type}</p>

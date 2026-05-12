@@ -4,13 +4,13 @@ import {
   FileSearch,
   MessageSquareWarning,
   Shield,
-  Users,
 } from 'lucide-react'
 import { CharacterCard, ContractCard, VehicleGroup } from './components/Cards'
 import { CharacterProfile } from './components/CharacterProfile'
 import { DataIcon, Panel, SectionHeader, Tag, TerminalPanel } from './components/Interface'
 import { RegionMap } from './components/RegionMap'
 import { Shell } from './components/Shell'
+import { cardWear } from './utils/cardWear'
 import {
   codeRules,
   contracts,
@@ -146,11 +146,9 @@ function HomePage() {
 
             <div className="mt-9 flex flex-wrap gap-3">
               <a href="/history" className="primary-action">
-                <FileSearch className="h-5 w-5" />
                  История
               </a>
               <a href="/people" className="secondary-action">
-                <Users className="h-5 w-5" />
                 Просмотреть досье
               </a>
             </div>
@@ -181,14 +179,14 @@ function HomePage() {
           text="Вексель - нейтральная наемническая сеть, которая держит дороги, сопровождает грузы, чинит технику и выживает там, где обычные лагеря распадаются от страха."
         />
         <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <Panel>
+          <Panel seed="home-identity">
             <p className="text-lg leading-8 text-stone-300">
               Они не называют себя армией и не продают спасение. Вексель работает контрактами:
               охрана, зачистка, разведка, логистика, ремонт и вывод людей из зон, куда уже не
               ходят одиночки. Их сила не в героизме, а в порядке, учете и способности вернуться.
             </p>
           </Panel>
-          <Panel>
+          <Panel seed="home-notes">
             <div className="grid gap-3 text-sm text-stone-400">
               {['Нейтралитет до оплаты', 'Свои важнее клиента', 'Радиоэфир держится круглосуточно', 'Каждый выход фиксируется в архиве'].map((item) => (
                 <div key={item} className="flex items-center gap-3 border-b border-stone-800 pb-3 last:border-0 last:pb-0">
@@ -215,14 +213,7 @@ function HomePage() {
         <SectionHeader eyebrow="ключевые фигуры" title="Люди и власть" />
         <div className="grid gap-5 md:grid-cols-3">
           {leadershipCards.map((card) => (
-            <a href={card.href} key={card.title} className="group archive-panel block">
-              <p className="text-sm uppercase text-amber-300">{card.subtitle}</p>
-              <h3 className="mt-3 font-display text-4xl uppercase text-stone-100">{card.title}</h3>
-              <p className="mt-4 text-sm leading-6 text-stone-400">{card.text}</p>
-              <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase text-amber-300">
-                Открыть <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-              </span>
-            </a>
+            <LeadershipCard key={card.title} card={card} />
           ))}
         </div>
       </section>
@@ -235,9 +226,9 @@ function PrincipleGrid() {
   return (
     <div className="grid gap-5 md:grid-cols-3">
       {principles.map((principle, index) => (
-        <Panel key={principle.id}>
+        <Panel key={principle.id} seed={`principle-${principle.id}`}>
           <p className="font-mono text-sm text-amber-300">0{index + 1}</p>
-          <h3 className="mt-4 font-display text-4xl uppercase text-stone-100">{principle.title}</h3>
+          <h3 className="mt-4 font-display text-3xl uppercase text-stone-100">{principle.title}</h3>
           <p className="mt-4 text-sm leading-7 text-stone-400">{principle.text}</p>
         </Panel>
       ))}
@@ -249,7 +240,7 @@ function ServiceGrid() {
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {services.map((service) => (
-        <Panel key={service.title}>
+        <Panel key={service.title} seed={`service-${service.title}`}>
           <div className="mb-5 grid h-11 w-11 place-items-center border border-amber-400/35 bg-amber-400/10 text-amber-200">
             <DataIcon name={service.icon} />
           </div>
@@ -258,6 +249,21 @@ function ServiceGrid() {
         </Panel>
       ))}
     </div>
+  )
+}
+
+function LeadershipCard({ card }) {
+  const wear = cardWear(`leadership-${card.title}`, 'group archive-panel block')
+
+  return (
+    <a href={card.href} className={wear.className} style={wear.style} data-serial={wear.serial}>
+      <p className="text-sm uppercase text-amber-300">{card.subtitle}</p>
+      <h3 className="mt-3 font-display text-4xl uppercase text-stone-100">{card.title}</h3>
+      <p className="mt-4 text-sm leading-6 text-stone-400">{card.text}</p>
+      <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase text-amber-300">
+        Открыть <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+      </span>
+    </a>
   )
 }
 
@@ -274,7 +280,7 @@ function HistoryPage() {
       />
 
       <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
-        <Panel className="lg:sticky lg:top-24 lg:self-start">
+        <Panel seed="history-timeline" className="lg:sticky lg:top-24 lg:self-start">
           <h3 className="font-display text-4xl uppercase text-stone-100">Timeline</h3>
           <div className="mt-6 grid gap-5">
             {timeline.map((item) => (
@@ -305,21 +311,21 @@ function HistoryPage() {
         </Panel>
 
         <div className="grid gap-5">
-          <Panel>
+          <Panel seed={`history-year-${selectedEntry.year}`}>
             <p className="font-mono text-sm text-amber-300">{selectedEntry.year}</p>
             <h3 className="mt-3 font-display text-5xl uppercase text-stone-100">
               {selectedEntry.title}
             </h3>
-            <p className="mt-4 text-base leading-8 text-stone-400">{selectedEntry.text}</p>
+            <p className="mt-4 font-lore text-base leading-8 text-stone-400">{selectedEntry.text}</p>
           </Panel>
 
           {selectedEntry.chapters.map((chapter) => (
-            <Panel key={chapter.chapter}>
+            <Panel key={chapter.chapter} seed={`history-${selectedEntry.year}-${chapter.chapter}`}>
               <p className="font-mono text-sm text-amber-300">
                 {selectedEntry.year} / CAPITOL {chapter.chapter}
               </p>
               <h3 className="mt-3 font-display text-4xl uppercase text-stone-100">{chapter.title}</h3>
-              <p className="mt-4 text-base leading-8 text-stone-400">{chapter.text}</p>
+              <p className="mt-4 font-lore text-base leading-8 text-stone-400">{chapter.text}</p>
             </Panel>
           ))}
         </div>
@@ -338,12 +344,12 @@ function PrinciplesPage() {
       />
       <PrincipleGrid />
       <div className="mt-8">
-        <Panel>
+        <Panel seed="principle-council-note">
           <div className="flex items-center gap-3">
             <MessageSquareWarning className="h-6 w-6 text-amber-300" />
             <h3 className="font-display text-4xl uppercase text-stone-100">Заметка Совета</h3>
           </div>
-          <p className="mt-4 max-w-3xl text-base leading-8 text-stone-400">
+          <p className="mt-4 max-w-3xl font-lore text-base leading-8 text-stone-400">
             Вексель сохраняет нейтралитет, пока клиент не пытается купить чужую жизнь дешевле
             собственной выгоды. После этого он перестает быть клиентом и становится угрозой маршруту.
           </p>
@@ -363,10 +369,10 @@ function StructurePage() {
       />
 
       <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <Panel>
+        <Panel seed="structure-leader">
           <p className="kicker">{structure.leader.title}</p>
           <h3 className="mt-3 font-display text-5xl uppercase text-stone-100">{structure.leader.name}</h3>
-          <p className="mt-5 text-base leading-8 text-stone-400">{structure.leader.text}</p>
+          <p className="mt-5 font-lore text-base leading-8 text-stone-400">{structure.leader.text}</p>
           <a href="/profile/adam-radcliffe" className="mt-7 inline-flex items-center gap-2 border border-amber-400/50 bg-amber-400/10 px-4 py-3 text-sm font-semibold uppercase text-amber-200 transition hover:bg-amber-400/20">
             <FileSearch className="h-4 w-4" />
             Открыть досье
@@ -375,7 +381,7 @@ function StructurePage() {
 
         <div className="grid gap-4 sm:grid-cols-2">
           {structure.council.map((item) => (
-            <Panel key={item.title}>
+            <Panel key={item.title} seed={`council-${item.title}`}>
               <p className="kicker">совет</p>
               <h3 className="mt-3 font-display text-3xl uppercase text-stone-100">{item.title}</h3>
               <p className="mt-3 text-sm leading-6 text-stone-400">{item.text}</p>
@@ -384,7 +390,7 @@ function StructurePage() {
         </div>
       </div>
 
-      <Panel className="mt-6">
+      <Panel seed="structure-rear" className="mt-6">
         <p className="kicker">тыл</p>
         <h3 className="mt-3 font-display text-4xl uppercase text-stone-100">Люди, которые держат лагерь живым</h3>
         <div className="mt-6 flex flex-wrap gap-2">
@@ -471,7 +477,7 @@ function CodePage() {
       />
       <div className="grid gap-4 md:grid-cols-2">
         {codeRules.map((rule, index) => (
-          <Panel key={rule}>
+          <Panel key={rule} seed={`code-${rule}`}>
             <div className="flex items-start gap-4">
               <span className="font-mono text-sm text-amber-300">{String(index + 1).padStart(2, '0')}</span>
               <p className="text-lg font-semibold text-stone-100">{rule}</p>

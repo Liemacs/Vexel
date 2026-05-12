@@ -1,5 +1,6 @@
 import { ArrowRight, ClipboardCheck, UserRound } from 'lucide-react'
 import { DataIcon, Panel, Tag } from './Interface'
+import { cardWear } from '../utils/cardWear'
 
 function statusTone(status) {
   if (status.includes('Провал')) return 'danger'
@@ -9,8 +10,15 @@ function statusTone(status) {
 }
 
 export function CharacterCard({ member }) {
+  const wear = cardWear(`dossier-${member.slug}`, 'group dossier-card')
+
   return (
-    <a href={`/profile/${member.slug}`} className="group dossier-card">
+    <a
+      href={`/profile/${member.slug}`}
+      className={wear.className}
+      style={wear.style}
+      data-serial={wear.serial}
+    >
       <div className="relative aspect-[4/3] overflow-hidden bg-stone-900">
         <img
           src={member.image}
@@ -30,8 +38,8 @@ export function CharacterCard({ member }) {
           </div>
           <UserRound className="mt-1 h-5 w-5 text-stone-500 transition group-hover:text-amber-300" />
         </div>
-        <p className="mt-4 text-sm text-stone-400">{member.role}</p>
-        <p className="mt-2 text-sm text-stone-500">{member.specialization}</p>
+        <p className="mt-4 font-lore text-sm text-stone-400">{member.role}</p>
+        <p className="mt-2 font-lore text-sm text-stone-500">{member.specialization}</p>
         <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold uppercase text-amber-300">
           Досье <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
         </span>
@@ -42,15 +50,14 @@ export function CharacterCard({ member }) {
 
 export function ContractCard({ contract }) {
   return (
-    <Panel className="flex h-full flex-col gap-5">
+    <Panel seed={`contract-${contract.number}`} className="flex h-full flex-col gap-5">
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="font-mono text-sm text-amber-300">{contract.number}</p>
           <h3 className="mt-2 font-display text-3xl uppercase text-stone-100">{contract.title}</h3>
         </div>
-        <ClipboardCheck className="h-6 w-6 text-stone-500" />
       </div>
-      <p className="text-sm leading-6 text-stone-400">{contract.text}</p>
+      <p className="font-lore text-sm leading-6 text-stone-400">{contract.text}</p>
       <div className="mt-auto grid gap-3 text-sm text-stone-400">
         <div className="flex items-center justify-between border-t border-stone-800 pt-3">
           <span>Статус</span>
@@ -71,7 +78,7 @@ export function ContractCard({ contract }) {
 
 export function VehicleGroup({ group }) {
   return (
-    <Panel>
+    <Panel seed={`vehicle-${group.category}`}>
       <div className="mb-5 flex items-center gap-3">
         <span className="grid h-10 w-10 place-items-center border border-amber-400/30 bg-amber-400/10 text-amber-200">
           <DataIcon name={group.icon} />
@@ -87,7 +94,7 @@ export function VehicleGroup({ group }) {
                 {item.status}
               </Tag>
             </div>
-            <p className="mt-2 text-sm leading-6 text-stone-400">{item.text}</p>
+            <p className="mt-2 font-lore text-sm leading-6 text-stone-400">{item.text}</p>
           </div>
         ))}
       </div>

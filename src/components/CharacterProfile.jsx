@@ -17,13 +17,13 @@ export function CharacterProfile({ member }) {
           <h1 className="mt-3 font-display text-6xl uppercase text-stone-100 sm:text-8xl">
             {member.name}
           </h1>
-          <p className="mt-4 max-w-2xl text-lg leading-8 text-stone-300">{member.quote}</p>
+          <p className="mt-4 max-w-2xl font-lore text-lg leading-8 text-stone-300">{member.quote}</p>
         </div>
       </section>
 
       <section className="site-section">
         <div className="grid gap-6 lg:grid-cols-[0.78fr_1.22fr]">
-          <Panel>
+          <Panel seed={`profile-${member.slug}-photo`}>
             <img src={member.image} alt={member.name} className="aspect-[4/5] w-full object-cover" />
             <div className="mt-5 grid gap-3 text-sm">
               {[
@@ -41,13 +41,13 @@ export function CharacterProfile({ member }) {
           </Panel>
 
           <div className="grid gap-6">
-            <Panel>
+            <Panel seed={`profile-${member.slug}-bio`}>
               <p className="kicker">bio</p>
               <h2 className="mt-3 font-display text-4xl uppercase text-stone-100">Биография</h2>
-              <p className="mt-4 text-base leading-8 text-stone-400">{member.bio}</p>
+              <p className="mt-4 font-lore text-base leading-8 text-stone-400">{member.bio}</p>
             </Panel>
 
-            <Panel>
+            <Panel seed={`profile-${member.slug}-skills`}>
               <p className="kicker">skills</p>
               <h2 className="mt-3 font-display text-4xl uppercase text-stone-100">Навыки</h2>
               <div className="mt-6 grid gap-4">
@@ -68,7 +68,7 @@ export function CharacterProfile({ member }) {
         </div>
 
         <div className="mt-6 grid gap-6 lg:grid-cols-3">
-          <Panel>
+          <Panel seed={`profile-${member.slug}-gear`}>
             <ShieldCheck className="h-6 w-6 text-amber-300" />
             <h2 className="mt-4 font-display text-3xl uppercase text-stone-100">Снаряжение</h2>
             <div className="mt-5 flex flex-wrap gap-2">
@@ -78,13 +78,13 @@ export function CharacterProfile({ member }) {
             </div>
           </Panel>
 
-          <Panel>
+          <Panel seed={`profile-${member.slug}-character`}>
             <Radio className="h-6 w-6 text-amber-300" />
             <h2 className="mt-4 font-display text-3xl uppercase text-stone-100">Характер</h2>
-            <p className="mt-4 text-sm leading-7 text-stone-400">{member.character}</p>
+            <p className="mt-4 font-lore text-sm leading-7 text-stone-400">{member.character}</p>
           </Panel>
 
-          <Panel>
+          <Panel seed={`profile-${member.slug}-connections`}>
             <h2 className="font-display text-3xl uppercase text-stone-100">Связи</h2>
             <div className="mt-5 grid gap-2">
               {member.connections.map((connection) => (
@@ -97,10 +97,10 @@ export function CharacterProfile({ member }) {
         </div>
 
         <div className="mt-6">
-          <Panel>
+          <Panel seed={`profile-${member.slug}-history`}>
             <p className="kicker">history</p>
             <h2 className="mt-3 font-display text-4xl uppercase text-stone-100">История в Векселе</h2>
-            <p className="mt-4 text-sm leading-7 text-stone-400">{member.vexelHistory}</p>
+            <p className="mt-4 font-lore text-sm leading-7 text-stone-400">{member.vexelHistory}</p>
           </Panel>
         </div>
       </section>
