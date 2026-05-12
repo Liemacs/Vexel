@@ -1,4 +1,4 @@
-import { ArrowRight, ClipboardCheck, UserRound } from 'lucide-react'
+import { ArrowRight, UserRound } from 'lucide-react'
 import { DataIcon, Panel, Tag } from './Interface'
 import { cardWear } from '../utils/cardWear'
 
